@@ -6,12 +6,13 @@ export default {
   data() {
     return {
       newTodo: "",
-      todos: [{ id: id++, text: "To Do list", isupdate: false }],
+      todos: [{ id: id++, text: "To Do lis  t" }],
+      selectedId: 0,
     };
   },
   methods: {
     addTodo() {
-      this.todos.push({ id: id++, text: this.newTodo, isupdate: false });
+      this.todos.push({ id: id++, text: this.newTodo });
       this.newTodo = "";
 
       let id = 0;
@@ -38,12 +39,16 @@ export default {
     },
     updateTodo(todo) {
       // this.update_flag = !this.update_flag;
+      this.selectedId = todo.id;
+      console.log(this.selectedId);
+
+      this.$refs.el_update.value = this.todos[this.selectedId].text;
+
       const modal = document.querySelector(".modal");
       const backdrop = document.querySelector(".backdrop");
       backdrop.classList.add("_on");
       modal.classList.add("_btn");
 
-      todo.text = this.$refs.el_update[todo.id].value;
       // todo.text = this.$refs.el_update.value;
     },
 
@@ -52,6 +57,8 @@ export default {
       const backdrop = document.querySelector(".backdrop");
       backdrop.classList.remove("_on");
       modal.classList.remove("_btn");
+
+      this.todos[this.selectedId].text = this.$refs.el_update.value;
     },
 
     closeUpdatenoC() {
